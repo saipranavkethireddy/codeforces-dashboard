@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CF Insights — Codeforces Analytics Dashboard</title>
+    <!-- FontAwesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Pure CSS stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- App Shell Container -->
+    <div class="app-container">
+      <!-- Sidebar Navigation (Desktop) -->
+      <aside id="sidebar" class="sidebar">
+        <div class="brand-header">
+          <div class="brand-icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <span class="brand-title">CF Insights</span>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="nav-menu">
+          <a href="#overview" data-tab="overview" class="nav-link active">
+            <i class="fa-solid fa-house"></i> Overview
+          </a>
+          <a href="#analytics" data-tab="analytics" class="nav-link">
+            <i class="fa-solid fa-chart-pie"></i> Analytics & Charts
+          </a>
+          <a href="#heatmap" data-tab="heatmap" class="nav-link">
+            <i class="fa-solid fa-calendar-days"></i> Activity Heatmap
+          </a>
+          <a href="#contests" data-tab="contests" class="nav-link">
+            <i class="fa-solid fa-trophy"></i> Contests & Schedule
+          </a>
+          <a href="#compare" data-tab="compare" class="nav-link">
+            <i class="fa-solid fa-users-viewfinder"></i> Compare Users
+          </a>
+          <a href="#practice" data-tab="practice" class="nav-link">
+            <i class="fa-solid fa-bullseye"></i> Smart Practice
+          </a>
+          <a href="#explorer" data-tab="explorer" class="nav-link">
+            <i class="fa-solid fa-magnifying-glass"></i> Problem Explorer
+          </a>
+          <a href="#goals" data-tab="goals" class="nav-link">
+            <i class="fa-solid fa-flag-checkered"></i> Goals & Progress
+          </a>
+          <a href="#readme" data-tab="readme" class="nav-link">
+            <i class="fa-solid fa-book"></i> Documentation
+          </a>
+        </nav>
+
+        <!-- Sidebar Footer -->
+        <div class="sidebar-footer">
+          <span
+            >API Status:
+            <span id="api-status-dot" class="status-dot connected"></span>
+            <span id="api-status-text">Connected</span></span
+          >
+          <span id="last-updated-footer">Synced Just Now</span>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="main-wrapper">
+        <!-- Top Header Navbar -->
+        <header class="top-header">
+          <div class="search-section">
+            <button id="mobile-menu-btn" class="mobile-menu-btn">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="search-box">
+              <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              <input
+                type="text"
+                id="handle-search-input"
+                placeholder="Search Codeforces handle (e.g., tourist, jiangly)..."
+              />
+              <button id="handle-search-btn" class="search-btn">Search</button>
+            </div>
+          </div>
+
+          <!-- Header Actions -->
+          <div class="header-actions">
+            <!-- Saved Users Dropdown -->
+            <div class="dropdown-container">
+              <button id="saved-users-toggle" class="action-btn">
+                <i
+                  class="fa-solid fa-bookmark"
+                  style="color: var(--accent-cyan)"
+                ></i>
+                <span>Saved</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div id="saved-users-dropdown" class="dropdown-menu hidden">
+                <div class="dropdown-title">Saved Handles</div>
+                <div id="saved-users-list"></div>
+                <div
+                  class="dropdown-footer"
+                  style="
+                    padding-top: 4px;
+                    border-top: 1px solid var(--border-color);
+                    margin-top: 4px;
+                  "
+                >
+                  <button
+                    id="save-current-handle-btn"
+                    class="dropdown-action-btn"
+                  >
+                    <i class="fa-solid fa-plus"></i> Save Current Handle
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Refresh Data -->
+            <button
+              id="refresh-btn"
+              title="Refresh Data"
+              class="action-btn icon-only"
+            >
+              <i class="fa-solid fa-rotate"></i>
+            </button>
+
+            <!-- Theme Toggle -->
+            <button
+              id="theme-toggle-btn"
+              title="Toggle Light/Dark Theme"
+              class="action-btn icon-only"
+            >
+              <i
+                class="fa-solid fa-moon"
+                id="theme-icon"
+                style="color: var(--accent-amber)"
+              ></i>
+            </button>
+
+            <!-- User Avatar -->
+            <div id="header-avatar" class="header-avatar">CF</div>
+          </div>
+        </header>
+
+        <!-- Scrollable Content Viewport -->
+        <main id="main-content" class="main-content">
+          <!-- Notification Banner -->
+          <div id="alert-banner" class="alert-banner hidden">
+            <span id="alert-message">Error loading data.</span>
+            <button
+              onclick="
+                document.getElementById('alert-banner').classList.add('hidden')
+              "
+              style="
+                background: none;
+                border: none;
+                color: inherit;
+                cursor: pointer;
+              "
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <!-- Skeleton Loader Section -->
+          <div id="skeleton-loader" class="skeleton-loader">
+            <div class="skeleton-grid">
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+            </div>
+            <div class="skeleton-box"></div>
+          </div>
+
+          <!-- Dynamic Tab Views Container -->
+          <div id="tab-content-container"></div>
+        </main>
+      </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script src="script.js"></script>
+  </body>
+</html>
